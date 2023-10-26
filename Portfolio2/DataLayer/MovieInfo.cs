@@ -1,4 +1,4 @@
-namespace Portfolio2;
+namespace DataLayer;
 
 public class MovieInfo
 {
