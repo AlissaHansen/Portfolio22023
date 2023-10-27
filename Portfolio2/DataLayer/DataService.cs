@@ -1,8 +1,8 @@
 namespace DataLayer;
 
-public class DataService
+public class DataService : IDataService
 {
-    public IList<MovieInfo> GetMovieInfos()
+    public IList<MovieInfo> GetMovieInfos(int page, int pageSize)
     {
         var db = new MoviedbContext();
         return db.MovieInfos.ToList();
