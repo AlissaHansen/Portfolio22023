@@ -33,11 +33,31 @@ public class MovieInfosController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("{id}", Name = nameof(GetMovieInfo))]
+
+    public IActionResult GetMovieInfo(string id)
+    {
+        var movie = _dataService.GetMovieInfo(id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CreateMovieInfoModel(movie));
+    }
+
     private MovieInfoListModel CreateMovieInfoListModel(MovieInfo movieInfo)
     {
         var model = _mapper.Map<MovieInfoListModel>(movieInfo);
-        model.Url = GetUrl(nameof(GetMovieInfos), new { movieInfo.Id });
+        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
         return model;
 
+    }
+
+    private MovieInfoModel CreateMovieInfoModel(MovieInfo movieInfo)
+    {
+        var model = _mapper.Map<MovieInfoModel>(movieInfo);
+        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
+        return model;
     }
 }
