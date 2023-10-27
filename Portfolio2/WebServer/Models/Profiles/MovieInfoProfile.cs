@@ -8,5 +8,6 @@ public class MovieInfoProfile : Profile
     public MovieInfoProfile()
     {
         CreateMap<MovieInfo, MovieInfoModel>();
+        CreateMap<MovieInfo, MovieInfoListModel>();
     }
 }
