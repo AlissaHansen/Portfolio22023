@@ -2,10 +2,14 @@ namespace DataLayer;
 
 public class DataService : IDataService
 {
-    public IList<MovieInfo> GetMovieInfos(int page, int pageSize)
+    public (IList<MovieInfo> movieInfos, int count) GetMovieInfos(int page, int pageSize)
     {
         var db = new MoviedbContext();
-        return db.MovieInfos.ToList();
+        var movieInfos = db.MovieInfos
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (movieInfos, db.MovieInfos.Count());
     }
 
     public MovieInfo? GetMovieInfo(string Id)
