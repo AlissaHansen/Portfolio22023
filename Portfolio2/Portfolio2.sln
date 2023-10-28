@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebServer.csproj", "{62C3B0CA-F924-48F4-8A7F-6233F9578EBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApp", "MyApp\MyApp.csproj", "{013AE50C-E43B-4237-800D-8249010099DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{62C3B0CA-F924-48F4-8A7F-6233F9578EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C3B0CA-F924-48F4-8A7F-6233F9578EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C3B0CA-F924-48F4-8A7F-6233F9578EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{013AE50C-E43B-4237-800D-8249010099DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{013AE50C-E43B-4237-800D-8249010099DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{013AE50C-E43B-4237-800D-8249010099DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{013AE50C-E43B-4237-800D-8249010099DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

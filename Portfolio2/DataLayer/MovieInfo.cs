@@ -12,4 +12,6 @@ public class MovieInfo
     public int? RunTime { get; set; }
     public string? Poster { get; set; }
     public string? Plot { get; set; }
+   // public ICollection<Genre> Genres { get; set; }
+    
 }

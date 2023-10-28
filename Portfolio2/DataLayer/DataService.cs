@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace DataLayer;
 
 public class DataService : IDataService
@@ -12,9 +14,9 @@ public class DataService : IDataService
         return (movieInfos, db.MovieInfos.Count());
     }
 
-    public MovieInfo? GetMovieInfo(string Id)
+    public MovieInfo? GetMovieInfo(string searchId)
     {
         var db = new MoviedbContext();
-        return db.MovieInfos.FirstOrDefault(x => x.Id.Equals(Id));
+        return db.MovieInfos.FirstOrDefault(x => x.Id.Equals(searchId));
     }
 }

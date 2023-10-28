@@ -5,9 +5,12 @@ namespace DataLayer;
 public class MoviedbContext : DbContext
 {
     public DbSet<MovieInfo> MovieInfos { get; set; }
+    public DbSet<Genre> Genres { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         optionsBuilder.UseNpgsql("host=localhost; db=moviedb; uid=postgres; pwd=chili321");
     }
 
@@ -24,5 +27,12 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<MovieInfo>().Property(x => x.RunTime).HasColumnName("runtimeminutes");
         modelBuilder.Entity<MovieInfo>().Property(x => x.Poster).HasColumnName("poster");
         modelBuilder.Entity<MovieInfo>().Property(x => x.Plot).HasColumnName("plot");
+        
+        // modelBuilder.Entity<Genre>().ToTable("genre");
+        // modelBuilder.Entity<Genre>().Property(x => x.Id).HasColumnName("tconst");
+        // modelBuilder.Entity<Genre>().Property(x => x.GenreName).HasColumnName("genre");
+        // modelBuilder.Entity<Genre>().HasKey(x => new { x.Id, x.GenreName });
     }
+    
+    
 }

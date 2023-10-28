@@ -1,3 +1,5 @@
+using DataLayer;
+
 namespace WebServer.Models;
 
 public class MovieInfoModel
@@ -12,4 +14,6 @@ public class MovieInfoModel
     public int RunTime { get; set; }
     public string Poster { get; set; } = string.Empty;
     public string Plot { get; set; } = string.Empty;
+    public IList<Genre> Genres { get; set; }
+
 }
