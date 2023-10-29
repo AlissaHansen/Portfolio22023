@@ -2,7 +2,6 @@
 
 var ds = new DataService();
 
-var movieInfo = ds.GetMovieInfo("tt0078672");
+var movieInfos = ds.GetMovieInfos(1, 10);
 
-Console.WriteLine(movieInfo.Genres.Count());
 

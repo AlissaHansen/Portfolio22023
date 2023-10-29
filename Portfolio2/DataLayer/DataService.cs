@@ -8,6 +8,7 @@ public class DataService : IDataService
     {
         var db = new MoviedbContext();
         var movieInfos = db.MovieInfos
+            .Include(x => x.Genres)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();

@@ -28,10 +28,10 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<MovieInfo>().Property(x => x.Poster).HasColumnName("poster");
         modelBuilder.Entity<MovieInfo>().Property(x => x.Plot).HasColumnName("plot");
         
-        // modelBuilder.Entity<Genre>().ToTable("genre");
-        // modelBuilder.Entity<Genre>().Property(x => x.Id).HasColumnName("tconst");
-        // modelBuilder.Entity<Genre>().Property(x => x.GenreName).HasColumnName("genre");
-        // modelBuilder.Entity<Genre>().HasKey(x => new { x.Id, x.GenreName });
+        modelBuilder.Entity<Genre>().ToTable("genre");
+        modelBuilder.Entity<Genre>().Property(x => x.Id).HasColumnName("tconst");
+        modelBuilder.Entity<Genre>().Property(x => x.GenreName).HasColumnName("genre");
+        modelBuilder.Entity<Genre>().HasKey(x => new { x.Id, x.GenreName });
     }
     
     
