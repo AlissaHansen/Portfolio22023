@@ -11,7 +11,7 @@ var ds = new DataService();
 //     Console.WriteLine($"{x.Id}, {string.Join(",", x.Genres.Select(x => x.GenreName))}");
 // }
 
-var movie = ds.GetMovieInfo("tt0098769");
+var movie = ds.GetMovieInfo("tt0052520");
 
 foreach (var entity in movie.Genres)
 {
