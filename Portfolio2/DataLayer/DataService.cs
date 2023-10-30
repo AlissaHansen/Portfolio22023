@@ -18,6 +18,13 @@ public class DataService : IDataService
     public MovieInfo? GetMovieInfo(string searchId)
     {
         var db = new MoviedbContext();
-        return db.MovieInfos.FirstOrDefault(x => x.Id.Equals(searchId));
+
+        foreach (var item in db.MovieInfos
+                     .Include(g => g.Genres)
+                     .Where(x => x.Id.Equals(searchId)))
+        {
+            return item;
+        }
+        return null;
     }
 }
