@@ -49,7 +49,7 @@ public class MovieInfosController : BaseController
     private MovieInfoListModel CreateMovieInfoListModel(MovieInfo movieInfo)
     {
         var model = _mapper.Map<MovieInfoListModel>(movieInfo);
-        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
+        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id }); 
         return model;
 
     }
