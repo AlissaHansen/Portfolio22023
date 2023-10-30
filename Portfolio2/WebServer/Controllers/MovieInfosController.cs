@@ -50,6 +50,8 @@ public class MovieInfosController : BaseController
     {
         var model = _mapper.Map<MovieInfoListModel>(movieInfo);
         model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id }); 
+        model.AverageRating = movieInfo.Rating.AverageRating;
+        model.NumVotes = movieInfo.Rating.NumVotes;
         return model;
 
     }
@@ -58,6 +60,8 @@ public class MovieInfosController : BaseController
     {
         var model = _mapper.Map<MovieInfoModel>(movieInfo);
         model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
+        model.AverageRating = movieInfo.Rating.AverageRating;
+        model.NumVotes = movieInfo.Rating.NumVotes;
         return model;
     }
 }

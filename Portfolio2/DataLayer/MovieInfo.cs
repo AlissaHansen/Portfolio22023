@@ -13,5 +13,6 @@ public class MovieInfo
     public string? Poster { get; set; }
     public string? Plot { get; set; }
     public ICollection<Genre> Genres { get; set; }
+    public Rating? Rating { get; set; }
     
 }

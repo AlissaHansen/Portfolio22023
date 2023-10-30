@@ -6,5 +6,6 @@ public class MovieInfoListModel
     public string Url { get; set; } = string.Empty;
     public string Primarytitle { get; set; } = string.Empty;
     public string Poster { get; set; } = string.Empty;
-    public IList<Genre> Genres { get; set; }
+    public float AverageRating { get; set; }
+    public int NumVotes { get; set; }
 }

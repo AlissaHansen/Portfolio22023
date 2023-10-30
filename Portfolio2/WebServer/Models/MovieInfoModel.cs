@@ -14,6 +14,10 @@ public class MovieInfoModel
     public int RunTime { get; set; }
     public string Poster { get; set; } = string.Empty;
     public string Plot { get; set; } = string.Empty;
+    public float AverageRating { get; set; }
+    public int NumVotes { get; set; }
     public IList<Genre> Genres { get; set; }
+    
+    
 
 }

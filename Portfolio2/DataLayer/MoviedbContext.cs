@@ -6,6 +6,7 @@ public class MoviedbContext : DbContext
 {
     public DbSet<MovieInfo> MovieInfos { get; set; }
     public DbSet<Genre> Genres { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -32,6 +33,14 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<Genre>().Property(x => x.MovieInfoId).HasColumnName("tconst");
         modelBuilder.Entity<Genre>().Property(x => x.GenreName).HasColumnName("genre");
         modelBuilder.Entity<Genre>().HasKey(x => new { x.MovieInfoId, x.GenreName });
+        
+        modelBuilder.Entity<Rating>().ToTable("movie_ratings");
+        modelBuilder.Entity<Rating>().Property(x => x.MovieInfoId).HasColumnName("tconst");
+        modelBuilder.Entity<Rating>().Property(x => x.AverageRating).HasColumnName("averagerating");
+        modelBuilder.Entity<Rating>().Property(x => x.NumVotes).HasColumnName("numvotes");
+        modelBuilder.Entity<Rating>().HasKey(x => new { x.MovieInfoId});
+        
+
     }
     
     

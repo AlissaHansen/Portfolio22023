@@ -8,7 +8,7 @@ public class DataService : IDataService
     {
         var db = new MoviedbContext();
         var movieInfos = db.MovieInfos
-            .Include(x => x.Genres)
+            .Include(x=> x.Rating)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -20,6 +20,7 @@ public class DataService : IDataService
         var db = new MoviedbContext();
 
         foreach (var item in db.MovieInfos
+                     .Include(r => r.Rating)
                      .Include(g => g.Genres)
                      .Where(x => x.Id.Equals(searchId)))
         {
