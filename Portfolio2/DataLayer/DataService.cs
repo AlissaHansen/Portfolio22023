@@ -28,4 +28,26 @@ public class DataService : IDataService
         }
         return null;
     }
+    
+    public (IList<Person> persons, int count) GetPersons(int page, int pageSize)
+    {
+        var db = new MoviedbContext();
+        var persons = db.Persons
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (persons, db.Persons.Count());
+    }
+    
+    public Person? GetPerson(string searchId)
+    {
+        var db = new MoviedbContext();
+
+        foreach (var item in db.Persons
+                     .Where(x => x.Id.Equals(searchId)))
+        {
+            return item;
+        }
+        return null;
+    }
 }
