@@ -62,6 +62,16 @@ public class MovieInfosController : BaseController
         model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
         model.AverageRating = movieInfo.Rating.AverageRating;
         model.NumVotes = movieInfo.Rating.NumVotes;
+        
+        // Extract GenreName values from the list of genres
+        if (movieInfo.Genres != null && movieInfo.Genres.Any())
+        {
+            model.Genres = movieInfo.Genres.Select(genre => new GenreModel
+            {
+                GenreName = genre.GenreName
+            }).ToList();
+        }
+        
         return model;
     }
 }
