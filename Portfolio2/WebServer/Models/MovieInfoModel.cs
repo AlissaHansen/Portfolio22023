@@ -16,7 +16,7 @@ public class MovieInfoModel
     public string Plot { get; set; } = string.Empty;
     public float AverageRating { get; set; }
     public int NumVotes { get; set; }
-    public IList<Genre> Genres { get; set; }
+    public IList<GenreModel> Genres { get; set; }
     
     
 
