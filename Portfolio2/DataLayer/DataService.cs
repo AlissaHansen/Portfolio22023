@@ -33,6 +33,7 @@ public class DataService : IDataService
     {
         var db = new MoviedbContext();
         var persons = db.Persons
+            .Include(p=> p.Professions)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -44,6 +45,7 @@ public class DataService : IDataService
         var db = new MoviedbContext();
 
         foreach (var item in db.Persons
+                     .Include(p=> p.Professions)
                      .Where(x => x.Id.Equals(searchId)))
         {
             return item;

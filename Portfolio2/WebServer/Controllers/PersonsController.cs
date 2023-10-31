@@ -49,6 +49,14 @@ public class PersonsController : BaseController
     {
         var model = _mapper.Map<PersonListModel>(person);
         model.Url = GetUrl(nameof(GetPerson), new { person.Id });
+
+        if (person.Professions.Any())
+        {
+            model.Professions = person.Professions.Select(profession => new ProfessionModel
+            {
+                ProfessionTitle = profession.ProfessionTitle
+            }).ToList();
+        }
         return model;
 
     }
@@ -56,6 +64,14 @@ public class PersonsController : BaseController
     private PersonModel CreatePersonModel(Person person)
     {
         var model = _mapper.Map<PersonModel>(person);
+        
+        if (person.Professions.Any())
+        {
+            model.Professions = person.Professions.Select(profession => new ProfessionModel
+            {
+                ProfessionTitle = profession.ProfessionTitle
+            }).ToList();
+        }
         return model;
     }
 }

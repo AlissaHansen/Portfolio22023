@@ -8,6 +8,7 @@ public class MoviedbContext : DbContext
     public DbSet<Genre> Genres { get; set; }
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<Person> Persons { get; set; }
+    public DbSet<Profession> Professions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -47,6 +48,10 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<Person>().Property(x => x.BirthYear).HasColumnName("birthyear");
         modelBuilder.Entity<Person>().Property(x => x.DeathYear).HasColumnName("deathyear");
         
+        modelBuilder.Entity<Profession>().ToTable("profession");
+        modelBuilder.Entity<Profession>().Property(x => x.PersonId).HasColumnName("nconst");
+        modelBuilder.Entity<Profession>().Property(x => x.ProfessionTitle).HasColumnName("profession");
+        modelBuilder.Entity<Profession>().HasKey(x => new { x.PersonId, x.ProfessionTitle });
 
     }
     
