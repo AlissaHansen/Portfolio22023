@@ -46,6 +46,7 @@ public class DataService : IDataService
 
         foreach (var item in db.Persons
                      .Include(p=> p.Professions)
+                     .Include(k => k.KnownFors)
                      .Where(x => x.Id.Equals(searchId)))
         {
             return item;

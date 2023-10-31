@@ -9,6 +9,7 @@ public class MoviedbContext : DbContext
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<Person> Persons { get; set; }
     public DbSet<Profession> Professions { get; set; }
+    public DbSet<KnownFor> KnownFors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -53,6 +54,11 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<Profession>().Property(x => x.ProfessionTitle).HasColumnName("profession");
         modelBuilder.Entity<Profession>().HasKey(x => new { x.PersonId, x.ProfessionTitle });
 
+        modelBuilder.Entity<KnownFor>().ToTable("known_for");
+        modelBuilder.Entity<KnownFor>().Property(x => x.PersonId).HasColumnName("nconst");
+        modelBuilder.Entity<KnownFor>().Property(x => x.MovieInfoId).HasColumnName("knownfortitle");
+        modelBuilder.Entity<KnownFor>().HasKey(x => new { x.PersonId, x.MovieInfoId });
+        
     }
     
     

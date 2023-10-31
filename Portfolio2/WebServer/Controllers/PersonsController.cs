@@ -72,6 +72,14 @@ public class PersonsController : BaseController
                 ProfessionTitle = profession.ProfessionTitle
             }).ToList();
         }
+        
+        if (person.KnownFors.Any())
+        {
+            model.KnownForTitles = person.KnownFors.Select(knownfor => new KnownForModel
+            {
+                MovieInfoId = knownfor.MovieInfoId
+            }).ToList();
+        }
         return model;
     }
 }
