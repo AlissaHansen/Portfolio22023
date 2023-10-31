@@ -42,7 +42,7 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<Rating>().HasKey(x => new { x.MovieInfoId});
         
         modelBuilder.Entity<Person>().ToTable("person");
-        modelBuilder.Entity<Person>().Property(x => x.Id).HasColumnName("tconst");
+        modelBuilder.Entity<Person>().Property(x => x.Id).HasColumnName("nconst");
         modelBuilder.Entity<Person>().Property(x => x.Name).HasColumnName("primaryname");
         modelBuilder.Entity<Person>().Property(x => x.BirthYear).HasColumnName("birthyear");
         modelBuilder.Entity<Person>().Property(x => x.DeathYear).HasColumnName("deathyear");

@@ -1,7 +1,6 @@
 using AutoMapper;
 using DataLayer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using WebServer.Models;
 
 namespace WebServer.Controllers;
@@ -59,7 +58,6 @@ public class MovieInfosController : BaseController
     private MovieInfoModel CreateMovieInfoModel(MovieInfo movieInfo)
     {
         var model = _mapper.Map<MovieInfoModel>(movieInfo);
-        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
         model.AverageRating = movieInfo.Rating.AverageRating;
         model.NumVotes = movieInfo.Rating.NumVotes;
         

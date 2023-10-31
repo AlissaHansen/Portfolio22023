@@ -4,7 +4,6 @@ namespace WebServer.Models;
 
 public class MovieInfoModel
 {
-    public string Url { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
     public string PrimaryTitle { get; set; } = string.Empty;
     public string OriginalTitle { get; set;} = string.Empty;
