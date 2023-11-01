@@ -10,6 +10,7 @@ public class MoviedbContext : DbContext
     public DbSet<Person> Persons { get; set; }
     public DbSet<Profession> Professions { get; set; }
     public DbSet<KnownFor> KnownFors { get; set; }
+    public DbSet<MoviePrincipal> MoviePrincipals { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -59,7 +60,11 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<KnownFor>().Property(x => x.MovieInfoId).HasColumnName("knownfortitle");
         modelBuilder.Entity<KnownFor>().HasKey(x => new { x.PersonId, x.MovieInfoId });
         
+        modelBuilder.Entity<MoviePrincipal>().ToTable("movie_principals");
+        modelBuilder.Entity<MoviePrincipal>().Property(x => x.MovieInfoId).HasColumnName("tconst");
+        modelBuilder.Entity<MoviePrincipal>().Property(x => x.PersonId).HasColumnName("nconst");
+        modelBuilder.Entity<MoviePrincipal>().Property(x => x.Category).HasColumnName("category");
+        modelBuilder.Entity<MoviePrincipal>().Property(x => x.Ordering).HasColumnName("ordering");
+        modelBuilder.Entity<MoviePrincipal>().HasKey(x => new { x.MovieInfoId, x.PersonId });
     }
-    
-    
 }

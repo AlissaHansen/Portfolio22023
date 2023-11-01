@@ -69,6 +69,16 @@ public class MovieInfosController : BaseController
                 GenreName = genre.GenreName
             }).ToList();
         }
+
+        if (movieInfo.MoviePrincipals != null && movieInfo.MoviePrincipals.Any())
+        {
+            model.MoviePrincipals = movieInfo.MoviePrincipals.Select(moviePrincipal => new MoviePrincipalModel
+            {
+                Category = moviePrincipal.Category,
+                Ordering = moviePrincipal.Ordering,
+                PersonName = moviePrincipal.Person.Name
+            }).ToList();
+        }
         
         return model;
     }

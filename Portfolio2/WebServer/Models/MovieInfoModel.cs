@@ -16,6 +16,7 @@ public class MovieInfoModel
     public float AverageRating { get; set; }
     public int NumVotes { get; set; }
     public IList<GenreModel> Genres { get; set; }
+    public IList<MoviePrincipalModel> MoviePrincipals { get; set; }
     
     
 

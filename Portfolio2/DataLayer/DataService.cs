@@ -22,6 +22,8 @@ public class DataService : IDataService
         foreach (var item in db.MovieInfos
                      .Include(r => r.Rating)
                      .Include(g => g.Genres)
+                     .Include(m => m.MoviePrincipals)
+                     .ThenInclude(p=> p.Person)
                      .Where(x => x.Id.Equals(searchId)))
         {
             return item;

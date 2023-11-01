@@ -15,4 +15,6 @@ public class MovieInfo
     public ICollection<Genre>? Genres { get; set; }
     public Rating? Rating { get; set; }
     
+    public IList<MoviePrincipal> MoviePrincipals { get; set; }
+    
 }
