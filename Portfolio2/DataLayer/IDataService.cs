@@ -7,5 +7,7 @@ public interface IDataService
     public (IList<Person> persons, int count) GetPersons(int page, int pageSize);
     public Person? GetPerson(string searchId);
     public (IList<User> users, int count) GetUsers(int page, int pageSize);
+    public User? GetUser(string username);
+
 
 }

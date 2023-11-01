@@ -21,7 +21,6 @@ public class UsersController : BaseController
     }
 
     [HttpGet(Name = nameof(GetUsers))]
-
     public IActionResult GetUsers(int page = 0, int pageSize = 10)
     {
         (var users, var total) = _dataService.GetUsers(page, pageSize);
@@ -32,11 +31,29 @@ public class UsersController : BaseController
         return Ok(result);
 
     }
+
+    [HttpGet("{id}", Name = nameof(GetUser))]
+    public IActionResult GetUser(string id)
+    {
+        var user = _dataService.GetUser(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CreateUserModel(user));
+    }
     
     private UserListModel CreateUserListModel(User user)
     {
         var model = _mapper.Map<UserListModel>(user);
-        model.Url = GetUrl(nameof(GetUsers), new { user.UserId });
+        model.Url = GetUrl(nameof(GetUser), new { user.UserId });
         return model;
-    } 
+    }
+
+    private UserModel CreateUserModel(User user)
+    {
+        var model = _mapper.Map<UserModel>(user);
+        return model;
+    }
 }
