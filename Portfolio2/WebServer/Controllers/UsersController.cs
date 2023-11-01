@@ -32,10 +32,10 @@ public class UsersController : BaseController
 
     }
 
-    [HttpGet("{id}", Name = nameof(GetUser))]
-    public IActionResult GetUser(string id)
+    [HttpGet("{userId}", Name = nameof(GetUser))]
+    public IActionResult GetUser(string userId)
     {
-        var user = _dataService.GetUser(id);
+        var user = _dataService.GetUser(userId);
         if (user == null)
         {
             return NotFound();
