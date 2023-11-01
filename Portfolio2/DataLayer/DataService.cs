@@ -55,4 +55,21 @@ public class DataService : IDataService
         }
         return null;
     }
+
+    public (IList<User> users, int count) GetUsers(int page, int pageSize)
+    {
+        var db = new MoviedbContext();
+        var users = db.Users
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (users, db.Users.Count());
+    }
+
+    public User? GetUser(string username)
+    {
+        var db = new MoviedbContext();
+        return db.Users.FirstOrDefault(x => x.UserId.Equals(username));
+    }
+    
 }
