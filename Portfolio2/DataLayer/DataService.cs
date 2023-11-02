@@ -88,8 +88,24 @@ public class DataService : IDataService
     {
         var db = new MoviedbContext();
         var user = db.Users.FirstOrDefault(x => x.UserId.Equals(userId));
-        db.Users.Remove(user);
+        if (user != null)
+        {
+            db.Users.Remove(user);
+        }
         return db.SaveChanges() > 0;
+    }
+
+    public bool UpdateUser(User userToUpdate)
+    {
+        var db = new MoviedbContext();
+        var user = db.Users.FirstOrDefault(x => x.UserId.Equals(userToUpdate.UserId));
+        if (user != null)
+        {
+            user.Password = userToUpdate.Password;
+        }
+
+        return db.SaveChanges() > 0;
+
     }
     
     

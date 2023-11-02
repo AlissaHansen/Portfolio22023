@@ -71,7 +71,23 @@ public class UsersController : BaseController
         return BadRequest();
     }
 
+    [HttpPut]
+    public IActionResult UpdateUser(CreateUserModel model)
+    {
+        var user = new User
+        {
+            UserId = model.UserId,
+            Password = model.Password
+        };
+        if (_dataService.UpdateUser(user))
+        {
+            return Ok(user);
+        }
 
+        return BadRequest();
+    }
+
+    
     private UserListModel CreateUserListModel(User user)
     {
         var model = _mapper.Map<UserListModel>(user);

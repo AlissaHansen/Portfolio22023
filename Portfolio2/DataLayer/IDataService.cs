@@ -10,6 +10,7 @@ public interface IDataService
     public User? GetUser(string username);
     public bool CreateUser(User userToCreate);
     public bool DeleteUser(string userId);
+    public bool UpdateUser(User userToUpdate);
 
 
 }
