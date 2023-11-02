@@ -53,7 +53,19 @@ public class DataService : IDataService
             .ToList();
         return (persons, db.Persons.Count());
     }
-    
+    public (IList<Person> persons, int count) GetRankedPersons(int page, int pageSize)
+    {
+        var db = new MoviedbContext();
+        var persons = db.Persons
+            .Include(p=> p.PersonRating)
+            .Include(p => p.Professions)
+            .OrderByDescending(x => x.PersonRating != null ? x.PersonRating.PersonScore : 0) // Handle null ratings
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (persons, db.Persons.Count());
+    }
+
     public Person? GetPerson(string searchId)
     {
         var db = new MoviedbContext();

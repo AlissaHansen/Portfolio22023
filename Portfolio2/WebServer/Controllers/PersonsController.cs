@@ -22,9 +22,11 @@ public class PersonsController : BaseController
 
     [HttpGet(Name = nameof(GetPersons))]
 
-    public IActionResult GetPersons(int page = 0, int pageSize = 10)
+    public IActionResult GetPersons(int page = 0, int pageSize = 10, string ranked = "false")
     {
-        (var persons, var total) = _dataService.GetPersons(page, pageSize);
+        (var persons, var total) = ranked.Equals("true")
+        ? _dataService.GetRankedPersons(page, pageSize)
+        : _dataService.GetPersons(page, pageSize);
 
         var items = persons.Select(CreatePersonListModel);
 

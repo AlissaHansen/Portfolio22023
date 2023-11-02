@@ -12,6 +12,7 @@ public class MoviedbContext : DbContext
     public DbSet<KnownFor> KnownFors { get; set; }
     public DbSet<MoviePrincipal> MoviePrincipals { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<PersonRating> PersonRatings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -72,5 +73,11 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<User>().Property(x => x.UserId).HasColumnName("username");
         modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
         modelBuilder.Entity<User>().Property(x => x.CreationTime).HasColumnName("creationtime");
+
+        modelBuilder.Entity<PersonRating>().ToTable("person_ratings");
+        modelBuilder.Entity<PersonRating>().Property(x => x.PersonId).HasColumnName("nconst");
+        modelBuilder.Entity<PersonRating>().Property(x => x.PrimaryName).HasColumnName("primaryname");
+        modelBuilder.Entity<PersonRating>().Property(x => x.PersonScore).HasColumnName("personscore");
+        modelBuilder.Entity<PersonRating>().HasKey(x => new { x.PersonId });
     }
 }
