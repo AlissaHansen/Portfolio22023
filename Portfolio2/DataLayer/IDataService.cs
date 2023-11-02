@@ -8,6 +8,7 @@ public interface IDataService
     public Person? GetPerson(string searchId);
     public (IList<User> users, int count) GetUsers(int page, int pageSize);
     public User? GetUser(string username);
+    public bool CreateUser(User userToCreate);
 
 
 }

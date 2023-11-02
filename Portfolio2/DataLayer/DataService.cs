@@ -71,5 +71,17 @@ public class DataService : IDataService
         var db = new MoviedbContext();
         return db.Users.FirstOrDefault(x => x.UserId.Equals(username));
     }
+
+    public bool CreateUser(User userToCreate)
+    {
+        var db = new MoviedbContext();
+        var user = new User
+        {
+            UserId = userToCreate.UserId,
+            Password = userToCreate.Password
+        };
+        db.Add(user);
+        return db.SaveChanges() > 0;
+    }
     
 }

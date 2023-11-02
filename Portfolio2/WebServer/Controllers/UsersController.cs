@@ -43,7 +43,24 @@ public class UsersController : BaseController
 
         return Ok(CreateUserModel(user));
     }
-    
+
+    [HttpPost]
+    public IActionResult CreateUser(CreateUserModel model)
+    {
+        var user = new User
+        {
+            UserId = model.UserId,
+            Password = model.Password
+        };
+        if (_dataService.CreateUser(user))
+        {
+            return Created("success", user);
+        }
+
+        return BadRequest();
+    }
+
+
     private UserListModel CreateUserListModel(User user)
     {
         var model = _mapper.Map<UserListModel>(user);
