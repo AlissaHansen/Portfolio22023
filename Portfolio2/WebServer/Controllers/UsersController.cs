@@ -60,6 +60,17 @@ public class UsersController : BaseController
         return BadRequest();
     }
 
+    [HttpDelete]
+    public IActionResult DeleteUser(string userId)
+    {
+        if (_dataService.DeleteUser(userId))
+        {
+            return Ok("Deleted");
+        }
+
+        return BadRequest();
+    }
+
 
     private UserListModel CreateUserListModel(User user)
     {

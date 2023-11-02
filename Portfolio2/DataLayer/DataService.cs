@@ -83,5 +83,14 @@ public class DataService : IDataService
         db.Add(user);
         return db.SaveChanges() > 0;
     }
+
+    public bool DeleteUser(string userId)
+    {
+        var db = new MoviedbContext();
+        var user = db.Users.FirstOrDefault(x => x.UserId.Equals(userId));
+        db.Users.Remove(user);
+        return db.SaveChanges() > 0;
+    }
+    
     
 }
