@@ -14,6 +14,18 @@ public class DataService : IDataService
             .ToList();
         return (movieInfos, db.MovieInfos.Count());
     }
+    public (IList<MovieInfo> movieInfos, int count) GetRankedMovieInfos(int page, int pageSize)
+    {
+        var db = new MoviedbContext();
+        var movieInfos = db.MovieInfos
+            .Include(x => x.Rating)
+            .Where(x => x.Rating.NumVotes > 10000)
+            .OrderByDescending(x => x.Rating != null ? x.Rating.AverageRating : 0) // Handle null ratings
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (movieInfos, db.MovieInfos.Count());
+    }
 
     public MovieInfo? GetMovieInfo(string searchId)
     {

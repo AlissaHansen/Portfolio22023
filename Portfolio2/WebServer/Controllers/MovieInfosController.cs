@@ -22,9 +22,12 @@ public class MovieInfosController : BaseController
 
     [HttpGet(Name = nameof(GetMovieInfos))]
 
-    public IActionResult GetMovieInfos(int page = 0, int pageSize = 10)
+    public IActionResult GetMovieInfos(int page = 0, int pageSize = 10, string ranked = "false")
     {
-        (var movieInfos, var total) = _dataService.GetMovieInfos(page, pageSize);
+
+        (var movieInfos, var total) = ranked.Equals("true")
+        ? _dataService.GetRankedMovieInfos(page, pageSize)
+        : _dataService.GetMovieInfos(page, pageSize);
 
         var items = movieInfos.Select(CreateMovieInfoListModel);
 
