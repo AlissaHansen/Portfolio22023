@@ -96,6 +96,7 @@ public class DataService : IDataService
 
         foreach (var item  in db.Users
                      .Include(b=> b.MovieBookmarks)
+                     .Include(p=> p.PersonBookmarks)
                      .Where(u=>u.UserId.Equals(username)))
         {
             return item;
@@ -159,6 +160,29 @@ public class DataService : IDataService
         if (bookmark != null)
         {
             db.MovieBookmarks.Remove(bookmark);
+        }
+
+        return db.SaveChanges()>0;
+    }
+    public bool CreatePesonBookmark(PersonBookmark personBookmark)
+    {
+        var db = new MoviedbContext();
+        var bookmark = new PersonBookmark
+        {
+            PersonId = personBookmark.PersonId,
+            UserId = personBookmark.UserId
+        };
+        db.Add(bookmark);
+        return db.SaveChanges() > 0;
+    }
+    public bool DeletePersonBookmark(PersonBookmark personBookmark)
+    {
+        var db = new MoviedbContext();
+        var bookmark = db.PersonBookmarks.FirstOrDefault(x =>
+            x.UserId.Equals(personBookmark.UserId) && x.PersonId.Equals(personBookmark.PersonId));
+        if (bookmark != null)
+        {
+            db.PersonBookmarks.Remove(bookmark);
         }
 
         return db.SaveChanges()>0;

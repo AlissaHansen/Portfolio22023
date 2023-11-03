@@ -105,6 +105,14 @@ public class UsersController : BaseController
                 MovieInfoId = moviebookmark.MovieInfoId
             }).ToList();
         }
+
+        if (user.PersonBookmarks.Any())
+        {
+            model.PersonBookmarkModels = user.PersonBookmarks.Select(personbookmark => new PersonBookmarkModel
+            {
+                PersonId = personbookmark.PersonId
+            }).ToList();
+        }
         return model;
     }
 }

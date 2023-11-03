@@ -7,4 +7,5 @@ public class User
     public DateTime CreationTime { get; set; }
     
     public IList<MovieBookmark> MovieBookmarks { get; set; }
+    public IList<PersonBookmark> PersonBookmarks { get; set; }
 }
