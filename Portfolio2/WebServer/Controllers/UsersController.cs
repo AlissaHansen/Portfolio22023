@@ -98,6 +98,13 @@ public class UsersController : BaseController
     private UserModel CreateUserModel(User user)
     {
         var model = _mapper.Map<UserModel>(user);
+        if (user.MovieBookmarks.Any())
+        {
+            model.MovieBookmarkModels = user.MovieBookmarks.Select(moviebookmark => new MovieBookmarkModel
+            {
+                MovieInfoId = moviebookmark.MovieInfoId
+            }).ToList();
+        }
         return model;
     }
 }

@@ -93,7 +93,14 @@ public class DataService : IDataService
     public User? GetUser(string username)
     {
         var db = new MoviedbContext();
-        return db.Users.FirstOrDefault(x => x.UserId.Equals(username));
+
+        foreach (var item  in db.Users
+                     .Include(b=> b.MovieBookmarks)
+                     .Where(u=>u.UserId.Equals(username)))
+        {
+            return item;
+        }
+        return null;
     }
 
     public bool CreateUser(User userToCreate)
@@ -102,7 +109,7 @@ public class DataService : IDataService
         var user = new User
         {
             UserId = userToCreate.UserId,
-            Password = userToCreate.Password
+            Password = userToCreate.Password,
         };
         db.Add(user);
         return db.SaveChanges() > 0;

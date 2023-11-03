@@ -13,12 +13,13 @@ public class MoviedbContext : DbContext
     public DbSet<MoviePrincipal> MoviePrincipals { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<PersonRating> PersonRatings { get; set; }
+    public DbSet<MovieBookmark> MovieBookmarks { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql("host=localhost; db=imdb; uid=postgres; pwd=paranormalA1");
+        optionsBuilder.UseNpgsql("host=localhost; db=moviedb; uid=postgres; pwd=chili321");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -79,5 +80,10 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<PersonRating>().Property(x => x.PrimaryName).HasColumnName("primaryname");
         modelBuilder.Entity<PersonRating>().Property(x => x.PersonScore).HasColumnName("personscore");
         modelBuilder.Entity<PersonRating>().HasKey(x => new { x.PersonId });
+        
+        modelBuilder.Entity<MovieBookmark>().ToTable("movie_bookmarks");
+        modelBuilder.Entity<MovieBookmark>().Property(x => x.UserId).HasColumnName("username");
+        modelBuilder.Entity<MovieBookmark>().Property(x => x.MovieInfoId).HasColumnName("tconst");
+        modelBuilder.Entity<MovieBookmark>().HasKey(x => new { x.UserId, x.MovieInfoId });
     }
 }
