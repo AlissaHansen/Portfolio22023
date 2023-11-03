@@ -138,6 +138,30 @@ public class DataService : IDataService
         return db.SaveChanges() > 0;
 
     }
-    
-    
+
+    public bool CreateMovieBookmark(MovieBookmark movieBookmark)
+    {
+        var db = new MoviedbContext();
+        var bookmark = new MovieBookmark
+        {
+            MovieInfoId = movieBookmark.MovieInfoId,
+            UserId = movieBookmark.UserId
+        };
+        db.Add(bookmark);
+        return db.SaveChanges() > 0;
+    }
+
+    public bool DeleteMovieBookmark(MovieBookmark movieBookmark)
+    {
+        var db = new MoviedbContext();
+        var bookmark = db.MovieBookmarks.FirstOrDefault(x =>
+            x.UserId.Equals(movieBookmark.UserId) && x.MovieInfoId.Equals(movieBookmark.MovieInfoId));
+        if (bookmark != null)
+        {
+            db.MovieBookmarks.Remove(bookmark);
+        }
+
+        return db.SaveChanges()>0;
+    }
+
 }
