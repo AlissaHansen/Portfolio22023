@@ -30,8 +30,12 @@ public class RateController : BaseController
             MovieInfoId = model.MovieId,
             Rating = model.Rating
         };
-        _dataService.CreateRating(userRating);
-        return Ok(userRating);
+        if (_dataService.CreateRating(userRating))
+        {
+            return Ok(userRating);
+        }
+
+        return BadRequest();
     }
 
     private CreateRatingModel CreateRatingModel(UserRating userRating)

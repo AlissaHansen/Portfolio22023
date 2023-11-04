@@ -17,7 +17,7 @@ public interface IDataService
     public bool DeleteMovieBookmark(MovieBookmark movieBookmark);
     public bool CreatePesonBookmark(PersonBookmark personBookmark);
     public bool DeletePersonBookmark(PersonBookmark personBookmark);
-    public void CreateRating(UserRating userRating);
+    public bool CreateRating(UserRating userRating);
 
 
 }

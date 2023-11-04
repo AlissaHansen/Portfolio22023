@@ -191,12 +191,22 @@ public class DataService : IDataService
         return db.SaveChanges()>0;
     }
 
-    public void CreateRating(UserRating userRating)
+    public bool CreateRating(UserRating userRating)
     {
         using var db = new MoviedbContext();
 
-        db.Database.ExecuteSqlInterpolated
-            ($"select rate({userRating.UserId}, {userRating.MovieInfoId}, {userRating.Rating})");
+        try
+        {
+            db.Database.ExecuteSqlInterpolated
+                ($"select rate({userRating.UserId}, {userRating.MovieInfoId}, {userRating.Rating})");
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+       
         
     }
 
