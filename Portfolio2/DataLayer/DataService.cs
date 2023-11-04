@@ -194,7 +194,6 @@ public class DataService : IDataService
     public bool CreateRating(UserRating userRating)
     {
         using var db = new MoviedbContext();
-
         try
         {
             db.Database.ExecuteSqlInterpolated
@@ -206,8 +205,20 @@ public class DataService : IDataService
         {
             return false;
         }
-       
-        
     }
 
+    public bool DeleteRating(string username, string movieId)
+    {
+        using var db = new MoviedbContext();
+        try
+        {
+            db.Database.ExecuteSqlInterpolated($"select delete_rating({username}, {movieId})");
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
 }

@@ -38,6 +38,19 @@ public class RateController : BaseController
         return BadRequest();
     }
 
+    [HttpDelete]
+
+    public IActionResult DeleteRating(DeleteRatingModel model)
+    {
+        if (_dataService.DeleteRating(model.UserId, model.MovieId))
+        {
+            return Ok("deleted");
+        }
+
+        return BadRequest();
+    }
+    
+    
     private CreateRatingModel CreateRatingModel(UserRating userRating)
     {
         var model = _mapper.Map<CreateRatingModel>(userRating);
