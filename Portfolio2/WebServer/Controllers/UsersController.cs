@@ -117,19 +117,37 @@ public class UsersController : BaseController
 
         if (user.PersonBookmarks.Any())
         {
-            model.PersonBookmarkModels = user.PersonBookmarks.Select(personbookmark => new PersonBookmarkModel
-            {
-                PersonId = personbookmark.PersonId
-            }).ToList();
+            model.PersonBookmarkModels = user.PersonBookmarks
+                .Select(personbookmark =>
+                {
+                    var url = Url.Action("GetPerson", "Persons", new { id = personbookmark.PersonId });
+                    return new PersonBookmarkModel
+                    {
+                        PersonId = personbookmark.PersonId,
+                        Url = url != null 
+                            ? url 
+                            : "Not specified"
+                    };
+                })
+                .ToList();
         }
 
         if (user.UserRatings.Any())
         {
-            model.UserRatingModels = user.UserRatings.Select(userrating => new UserRatingModel
-            {
-                MovieInfoId = userrating.MovieInfoId,
-                Rating = userrating.Rating
-            }).ToList();
+            model.UserRatingModels = user.UserRatings
+                .Select(userrating =>
+                {
+                    var url = Url.Action("GetMovieInfo", "MovieInfos", new { id = userrating.MovieInfoId });
+                    return new UserRatingModel
+                    {
+                        MovieInfoId = userrating.MovieInfoId,
+                        Rating = userrating.Rating,
+                        Url = url != null 
+                            ? url 
+                            : "Not specified"
+                    };
+                })
+                .ToList();
         }
         return model;
     }

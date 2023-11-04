@@ -77,10 +77,19 @@ public class PersonsController : BaseController
         
         if (person.KnownFors.Any())
         {
-            model.KnownForTitles = person.KnownFors.Select(knownfor => new KnownForModel
-            {
-                MovieInfoId = knownfor.MovieInfoId
-            }).ToList();
+            model.KnownForTitles = person.KnownFors
+                .Select(knownfor =>
+                {
+                    var url = Url.Action("GetMovieInfo", "MovieInfos", new { id = knownfor.MovieInfoId });
+                    return new KnownForModel
+                    {
+                        MovieInfoId = knownfor.MovieInfoId,
+                        Url = url != null 
+                            ? url 
+                            : "Not specified"
+                    };
+                })
+                .ToList();
         }
         return model;
     }

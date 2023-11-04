@@ -73,14 +73,23 @@ public class MovieInfosController : BaseController
             }).ToList();
         }
 
-        if (movieInfo.MoviePrincipals != null && movieInfo.MoviePrincipals.Any())
+        if (movieInfo.MoviePrincipals.Any())
         {
-            model.MoviePrincipals = movieInfo.MoviePrincipals.Select(moviePrincipal => new MoviePrincipalModel
-            {
-                Category = moviePrincipal.Category,
-                Ordering = moviePrincipal.Ordering,
-                PersonName = moviePrincipal.Person.Name
-            }).ToList();
+            model.MoviePrincipals = movieInfo.MoviePrincipals
+                .Select(movieprincipals =>
+                {
+                    var url = Url.Action("GetPerson", "Persons", new { id = movieprincipals.PersonId });
+                    return new MoviePrincipalModel
+                    {
+                        Category = movieprincipals.Category,
+                        Ordering = movieprincipals.Ordering,
+                        PersonName = movieprincipals.Person.Name,
+                        Url = url != null 
+                            ? url 
+                            : "Not specified"
+                    };
+                })
+                .ToList();
         }
         
         return model;
