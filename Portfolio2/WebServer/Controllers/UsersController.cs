@@ -100,10 +100,19 @@ public class UsersController : BaseController
         var model = _mapper.Map<UserModel>(user);
         if (user.MovieBookmarks.Any())
         {
-            model.MovieBookmarkModels = user.MovieBookmarks.Select(moviebookmark => new MovieBookmarkModel
-            {
-                MovieInfoId = moviebookmark.MovieInfoId
-            }).ToList();
+            model.MovieBookmarkModels = user.MovieBookmarks
+                .Select(moviebookmark =>
+                {
+                    var url = Url.Action("GetMovieInfo", "MovieInfos", new { id = moviebookmark.MovieInfoId });
+                    return new MovieBookmarkModel
+                    {
+                        MovieInfoId = moviebookmark.MovieInfoId,
+                        Url = url != null 
+                            ? url 
+                            : "Not specified"
+                    };
+                })
+                .ToList();
         }
 
         if (user.PersonBookmarks.Any())
