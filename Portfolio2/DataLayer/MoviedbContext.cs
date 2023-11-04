@@ -20,7 +20,7 @@ public class MoviedbContext : DbContext
     {
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql("host=localhost; db=imdb2023; uid=postgres; pwd=paranormalA1");
+        optionsBuilder.UseNpgsql("host=localhost; db=moviedb; uid=postgres; pwd=chili321");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

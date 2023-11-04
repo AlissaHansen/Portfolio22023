@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Npgsql;
 
 namespace DataLayer;
 
@@ -187,6 +189,15 @@ public class DataService : IDataService
         }
 
         return db.SaveChanges()>0;
+    }
+
+    public void CreateRating(UserRating userRating)
+    {
+        using var db = new MoviedbContext();
+
+        db.Database.ExecuteSqlInterpolated
+            ($"select rate({userRating.UserId}, {userRating.MovieInfoId}, {userRating.Rating})");
+        
     }
 
 }
