@@ -97,6 +97,7 @@ public class DataService : IDataService
         foreach (var item  in db.Users
                      .Include(b=> b.MovieBookmarks)
                      .Include(p=> p.PersonBookmarks)
+                     .Include(u => u.UserRatings)
                      .Where(u=>u.UserId.Equals(username)))
         {
             return item;

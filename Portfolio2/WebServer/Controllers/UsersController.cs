@@ -113,6 +113,15 @@ public class UsersController : BaseController
                 PersonId = personbookmark.PersonId
             }).ToList();
         }
+
+        if (user.UserRatings.Any())
+        {
+            model.UserRatingModels = user.UserRatings.Select(userrating => new UserRatingModel
+            {
+                MovieInfoId = userrating.MovieInfoId,
+                Rating = userrating.Rating
+            }).ToList();
+        }
         return model;
     }
 }

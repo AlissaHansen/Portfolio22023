@@ -8,4 +8,5 @@ public class UserModel
     public DateTime CreationTime { get; set; }
     public IList<MovieBookmarkModel> MovieBookmarkModels { get; set; }
     public IList<PersonBookmarkModel> PersonBookmarkModels { get; set; }
+    public IList<UserRatingModel> UserRatingModels { get; set; }
 }

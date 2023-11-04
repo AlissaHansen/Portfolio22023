@@ -8,4 +8,5 @@ public class User
     
     public IList<MovieBookmark> MovieBookmarks { get; set; }
     public IList<PersonBookmark> PersonBookmarks { get; set; }
+    public IList<UserRating> UserRatings { get; set; }
 }
