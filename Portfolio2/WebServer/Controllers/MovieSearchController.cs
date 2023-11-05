@@ -33,7 +33,7 @@ public class MovieSearchController : BaseController
     private MovieSearchModel CreateMovieSearchModel(MovieSearchResult searchResult)
     {
         var model = _mapper.Map<MovieSearchModel>(searchResult);
-        model.Url = "FIX";
+        model.Url = Url.Action("GetMovieInfo", "MovieInfos", new { id = searchResult.MovieInfoId });
         return model;
     }
 }
