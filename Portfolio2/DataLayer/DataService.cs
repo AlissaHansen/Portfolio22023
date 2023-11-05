@@ -221,4 +221,11 @@ public class DataService : IDataService
             return false;
         }
     }
+
+    public IList<MovieSearchResult> GetMoviesBySearch(string username, string searchTerm)
+    {
+        using var db = new MoviedbContext();
+        var result=  db.MovieSearchResults.FromSqlInterpolated($"Select * from string_search({username}, {searchTerm})");
+        return result.ToList();
+    }
 }

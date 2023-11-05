@@ -19,6 +19,7 @@ public interface IDataService
     public bool DeletePersonBookmark(PersonBookmark personBookmark);
     public bool CreateRating(UserRating userRating);
     public bool DeleteRating(string username, string movieId);
+    public IList<MovieSearchResult> GetMoviesBySearch(string username, string searchTerm);
 
 
 }

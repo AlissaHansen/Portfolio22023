@@ -16,6 +16,8 @@ public class MoviedbContext : DbContext
     public DbSet<MovieBookmark> MovieBookmarks { get; set; }
     public DbSet<PersonBookmark> PersonBookmarks { get; set; }
     public DbSet<UserRating> UserRatings{ get; set; }
+    public DbSet<MovieSearchResult> MovieSearchResults { get; set; }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
@@ -97,5 +99,9 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<UserRating>().Property(x => x.MovieInfoId).HasColumnName("tconst");
         modelBuilder.Entity<UserRating>().Property(x => x.Rating).HasColumnName("rating");
         modelBuilder.Entity<UserRating>().HasKey(x => new { x.UserId, x.MovieInfoId });
+
+        modelBuilder.Entity<MovieSearchResult>().HasNoKey();
+        modelBuilder.Entity<MovieSearchResult>().Property(x => x.MovieInfoId).HasColumnName("movieid");
+        modelBuilder.Entity<MovieSearchResult>().Property(x => x.Title).HasColumnName("title");
     }
 }
