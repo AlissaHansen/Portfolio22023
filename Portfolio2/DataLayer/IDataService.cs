@@ -21,6 +21,8 @@ public interface IDataService
     public bool DeleteRating(string username, string movieId);
     public IList<MovieSearchResult> GetMoviesBySearch(string username, string searchTerm);
     public IList<MovieSearchResult> GetMoviesBySearchNoUser(string searchTerm);
+    public IList<PersonSearchResult> GetPersonsBySearch(string searchTerm, string username);
+    public IList<PersonSearchResult> GetPersonsBySearchNoUser(string searchTerm);
 
 
 

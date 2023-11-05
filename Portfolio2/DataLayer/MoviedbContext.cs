@@ -17,12 +17,13 @@ public class MoviedbContext : DbContext
     public DbSet<PersonBookmark> PersonBookmarks { get; set; }
     public DbSet<UserRating> UserRatings{ get; set; }
     public DbSet<MovieSearchResult> MovieSearchResults { get; set; }
+    public DbSet<PersonSearchResult> PersonSearchResults { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql("host=localhost; db=imdb2023; uid=postgres; pwd=paranormalA1");
+        optionsBuilder.UseNpgsql("host=localhost; db=moviedb; uid=postgres; pwd=chili321");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -104,5 +105,9 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<MovieSearchResult>().Property(x => x.MovieInfoId).HasColumnName("movieid");
         modelBuilder.Entity<MovieSearchResult>().Property(x => x.Title).HasColumnName("title");
         modelBuilder.Entity<MovieSearchResult>().Property(x => x.Poster).HasColumnName("poster");
+        
+        modelBuilder.Entity<PersonSearchResult>().HasNoKey();
+        modelBuilder.Entity<PersonSearchResult>().Property(x => x.PersonId).HasColumnName("nconst");
+        modelBuilder.Entity<PersonSearchResult>().Property(x => x.Name).HasColumnName("name");
     }
 }
