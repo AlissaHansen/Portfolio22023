@@ -103,5 +103,6 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<MovieSearchResult>().HasNoKey();
         modelBuilder.Entity<MovieSearchResult>().Property(x => x.MovieInfoId).HasColumnName("movieid");
         modelBuilder.Entity<MovieSearchResult>().Property(x => x.Title).HasColumnName("title");
+        modelBuilder.Entity<MovieSearchResult>().Property(x => x.Poster).HasColumnName("poster");
     }
 }
