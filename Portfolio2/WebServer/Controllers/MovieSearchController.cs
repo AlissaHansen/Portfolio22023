@@ -24,7 +24,9 @@ public class MovieSearchController : BaseController
 
     public IActionResult GetMovieSearchResults(string searchTerm, string username = "")
     {
-        var movies = _dataService.GetMoviesBySearch(searchTerm, username);
+        var movies = string.IsNullOrEmpty(username)
+            ? _dataService.GetMoviesBySearchNoUser(searchTerm)
+            : _dataService.GetMoviesBySearch(searchTerm, username);
         var items = movies.Select(CreateMovieSearchModel);
         return Ok(items);
     }
