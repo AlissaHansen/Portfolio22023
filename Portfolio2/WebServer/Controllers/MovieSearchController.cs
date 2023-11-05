@@ -1,7 +1,6 @@
 using AutoMapper;
 using DataLayer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebServer.Models;
 
 namespace WebServer.Controllers;
@@ -23,9 +22,9 @@ public class MovieSearchController : BaseController
 
     [HttpGet]
 
-    public IActionResult GetMovieSearchResults(SearchModel searchModel)
+    public IActionResult GetMovieSearchResults(string searchTerm, string username = "")
     {
-        var movies = _dataService.GetMoviesBySearch(searchModel.Username, searchModel.SearchTerm);
+        var movies = _dataService.GetMoviesBySearch(searchTerm, username);
         var items = movies.Select(CreateMovieSearchModel);
         return Ok(items);
     }
