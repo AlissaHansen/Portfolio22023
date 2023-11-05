@@ -228,4 +228,11 @@ public class DataService : IDataService
         var result=  db.MovieSearchResults.FromSqlInterpolated($"Select * from string_search({username}, {searchTerm})");
         return result.ToList();
     }
+    
+    public IList<MovieSearchResult> GetMoviesBySearchNoUser(string searchTerm)
+    {
+        using var db = new MoviedbContext();
+        var result=  db.MovieSearchResults.FromSqlInterpolated($"Select * from string_search({searchTerm})");
+        return result.ToList();
+    }
 }

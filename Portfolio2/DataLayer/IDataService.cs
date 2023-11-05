@@ -20,6 +20,8 @@ public interface IDataService
     public bool CreateRating(UserRating userRating);
     public bool DeleteRating(string username, string movieId);
     public IList<MovieSearchResult> GetMoviesBySearch(string username, string searchTerm);
+    public IList<MovieSearchResult> GetMoviesBySearchNoUser(string searchTerm);
+
 
 
 }
