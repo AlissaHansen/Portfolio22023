@@ -109,7 +109,7 @@ public class UsersController : BaseController
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddSeconds(45),
+            expires: DateTime.Now.AddDays(3),
             signingCredentials: creds
         );
 
