@@ -77,6 +77,8 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<User>().ToTable("users");
         modelBuilder.Entity<User>().Property(x => x.UserId).HasColumnName("username");
         modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
+        modelBuilder.Entity<User>().Property(x => x.Salt).HasColumnName("salt");
+        modelBuilder.Entity<User>().Property(x => x.Role).HasColumnName("role");
         modelBuilder.Entity<User>().Property(x => x.CreationTime).HasColumnName("creationtime");
 
         modelBuilder.Entity<PersonRating>().ToTable("person_ratings");

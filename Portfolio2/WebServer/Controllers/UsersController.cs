@@ -1,7 +1,9 @@
 using AutoMapper;
 using DataLayer;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WebServer.Models;
+using WebServiceToken.Services;
 
 namespace WebServer.Controllers;
 
@@ -12,12 +14,14 @@ public class UsersController : BaseController
 {
     private readonly IDataService _dataService;
     private readonly IMapper _mapper;
+    private readonly Hashing _hashing; 
 
-    public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper)
+    public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper, Hashing hashing)
         : base(linkGenerator)
     {
         _dataService = dataService;
         _mapper = mapper;
+        _hashing = hashing;
     }
 
     [HttpGet(Name = nameof(GetUsers))]
@@ -47,17 +51,26 @@ public class UsersController : BaseController
     [HttpPost]
     public IActionResult CreateUser(CreateUserModel model)
     {
+        if (_dataService.GetUser(model.UserId) != null)
+        {
+            return BadRequest();
+        }
+
+        if (string.IsNullOrEmpty(model.Password))
+        {
+            return BadRequest();
+        }
+
+        (var hashedPwd, var salt) = _hashing.Hash(model.Password);
+
         var user = new User
         {
             UserId = model.UserId,
-            Password = model.Password
+            Password = hashedPwd,
+            Salt = salt
         };
-        if (_dataService.CreateUser(user))
-        {
-            return Created("success", user);
-        }
-
-        return BadRequest();
+        _dataService.CreateUser(user);
+        return Ok();
     }
 
     [HttpDelete]

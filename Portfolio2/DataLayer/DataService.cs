@@ -114,6 +114,7 @@ public class DataService : IDataService
         {
             UserId = userToCreate.UserId,
             Password = userToCreate.Password,
+            Salt = userToCreate.Salt
         };
         db.Add(user);
         return db.SaveChanges() > 0;
