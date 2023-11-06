@@ -1,7 +1,12 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using AutoMapper;
 using DataLayer;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using WebServer.Models;
 using WebServiceToken.Services;
 
@@ -14,14 +19,17 @@ public class UsersController : BaseController
 {
     private readonly IDataService _dataService;
     private readonly IMapper _mapper;
-    private readonly Hashing _hashing; 
+    private readonly Hashing _hashing;
+    private readonly IConfiguration _configuration;
 
-    public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper, Hashing hashing)
+    public UsersController(IDataService dataService, LinkGenerator linkGenerator,
+        IMapper mapper, Hashing hashing, IConfiguration configuration)
         : base(linkGenerator)
     {
         _dataService = dataService;
         _mapper = mapper;
         _hashing = hashing;
+        _configuration = configuration;
     }
 
     [HttpGet(Name = nameof(GetUsers))]
@@ -67,12 +75,50 @@ public class UsersController : BaseController
         {
             UserId = model.UserId,
             Password = hashedPwd,
-            Salt = salt
+            Salt = salt,
+            Role = model.Role
         };
         _dataService.CreateUser(user);
         return Ok();
     }
 
+    [HttpPost("login")]
+    public IActionResult Login(UserLoginModel model)
+    {
+        var user = _dataService.GetUser(model.UserId);
+
+        if (user == null)
+        {
+            return BadRequest();
+        }
+
+        if (!_hashing.Verify(model.Password, user.Password, user.Salt))
+        {
+            return BadRequest();
+        }
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.UserId),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
+        var secret = _configuration.GetSection("Auth:Secret").Value;
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddSeconds(45),
+            signingCredentials: creds
+        );
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        return Ok(new { user.UserId, token = jwt });
+    }
+
+        
+        
     [HttpDelete]
     public IActionResult DeleteUser(string userId)
     {
