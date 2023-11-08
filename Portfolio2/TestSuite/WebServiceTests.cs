@@ -42,7 +42,7 @@ public class WebServiceTests
     {
         var newUser = new
         {
-            UserId = "TestUser",
+            UserId = "UserTest",
             Password = "password"
         };
         var (_, statusCode) = await PostData(UsersApi, newUser);

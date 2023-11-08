@@ -79,7 +79,7 @@ public class UsersController : BaseController
             Role = model.Role
         };
         _dataService.CreateUser(user);
-        return Ok();
+        return CreatedAtRoute(nameof(GetUser), new { userId = user.UserId }, user);
     }
 
     [HttpPost("login")]
