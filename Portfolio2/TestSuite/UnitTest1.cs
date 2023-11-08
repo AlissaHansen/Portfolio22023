@@ -42,7 +42,17 @@ public class UnitTest1
         var movie = service.GetMovieInfo("tt0137204");
         Assert.Equal("Joe Finds Grace", movie.PrimaryTitle);
     }
-    
+
+    /* Search Test */
+    [Fact]
+    public void GetMoviesBySearch_ValidSearch_RetunsMatchingMovies()
+    {
+        var service = new DataService();
+        var movies = service.GetMoviesBySearchNoUser("Avatar");
+        Assert.NotNull(movies);
+        Assert.Equal("Avatar", movies.First().Title);
+    }
+
     /* Users tests */
 
     [Fact]
@@ -67,7 +77,8 @@ public class UnitTest1
         var result = (service.CreateUser(user));
         Assert.True(result);
 
-        service.DeleteUser("Test"); //fjern den nye user igen
+        // Cleanup
+        service.DeleteUser("Test"); 
     }
 
     [Fact]
@@ -93,5 +104,35 @@ public class UnitTest1
         var result = service.DeleteUser("");
         Assert.False(result);
     }
-    
+
+    [Fact]
+    public void UpdateUser_NewUserPassword_UpdateUserPassword ()
+    {
+        var service = new DataService();
+        var newUser = new User
+        {
+            UserId = "UpdateTest",
+            Password = "passwordToUpdate",
+            Salt = "someSalt",
+            Role = "User"
+        };
+        service.CreateUser(newUser);
+
+        var userUpdate = new User
+        {
+            UserId = "UpdateTest",
+            Password = "updatedPassword",
+            Salt = "someSalt",
+            Role = "User"
+        };
+        var result = service.UpdateUser(userUpdate);
+        Assert.True(result);
+
+        var user = service.GetUser("UpdateTest");
+        Assert.Equal("updatedPassword", user.Password);
+
+        //cleanup
+        service.DeleteUser("UpdateTest");
+    }
+
 }
