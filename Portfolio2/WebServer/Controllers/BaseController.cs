@@ -15,7 +15,11 @@ public class BaseController : ControllerBase
 
     protected object Paging<T>(IEnumerable<T> items, int total, int page, int pageSize, string endpointName)
     {
-        var numPages = (int)Math.Ceiling(total / (double)pageSize);
+        var numPages = (int)Math.Ceiling(total / (double)pageSize) - 1;
+
+        page = page > numPages ? numPages : page;
+        pageSize = pageSize > total ? total : pageSize;
+
         var next = page < numPages - 1
             ? GetUrl(endpointName, new { page = page + 1, pageSize })
             : null;

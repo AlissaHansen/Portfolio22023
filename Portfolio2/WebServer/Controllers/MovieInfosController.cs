@@ -30,7 +30,7 @@ public class MovieInfosController : BaseController
         : _dataService.GetMovieInfos(page, pageSize);
 
         var items = movieInfos.Select(CreateMovieInfoListModel);
-
+        
         var result = Paging(items, total, page, pageSize, nameof(GetMovieInfos));
         return Ok(result);
     }

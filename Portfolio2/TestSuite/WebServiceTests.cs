@@ -49,7 +49,7 @@ public class WebServiceTests
 
         Assert.Equal(HttpStatusCode.Created, statusCode);
 
-        await DeleteData($"{UsersApi}?userid={newUser.UserId}");
+        await DeleteData($"{UsersApi}?userid={newUser.UserId}"); //sletter ikke em bruger lige nu
     }
 
     // Helpers taget fra Henriks test
