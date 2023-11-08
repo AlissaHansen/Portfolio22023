@@ -80,6 +80,7 @@ public class MoviedbContext : DbContext
         modelBuilder.Entity<User>().Property(x => x.Salt).HasColumnName("salt");
         modelBuilder.Entity<User>().Property(x => x.Role).HasColumnName("role");
         modelBuilder.Entity<User>().Property(x => x.CreationTime).HasColumnName("creationtime");
+        modelBuilder.Entity<User>().Property(x => x.CreationTime).HasDefaultValue();
 
         modelBuilder.Entity<PersonRating>().ToTable("person_ratings");
         modelBuilder.Entity<PersonRating>().Property(x => x.PersonId).HasColumnName("nconst");
