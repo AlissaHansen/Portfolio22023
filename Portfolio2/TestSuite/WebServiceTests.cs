@@ -45,7 +45,11 @@ public class WebServiceTests
             UserId = "TestUser",
             Password = "password"
         };
-        var statusCode = await PostData(UsersApi, newUser);
+        var (_, statusCode) = await PostData(UsersApi, newUser);
+
+        Assert.Equal(HttpStatusCode.Created, statusCode);
+
+        await DeleteData($"{UsersApi}?userid={newUser.UserId}");
     }
 
     // Helpers taget fra Henriks test
@@ -67,6 +71,12 @@ public class WebServiceTests
         var response = await client.PostAsync(url, requestContent);
         var data = await response.Content.ReadAsStringAsync();
         return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
+    }
+    async Task<HttpStatusCode> DeleteData(string url)
+    {
+        var client = new HttpClient();
+        var response = await client.DeleteAsync(url);
+        return response.StatusCode;
     }
 
 }

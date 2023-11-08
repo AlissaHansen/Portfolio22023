@@ -133,10 +133,12 @@ public class UsersController : BaseController
     [HttpPut]
     public IActionResult UpdateUser(CreateUserModel model)
     {
+        (var hashedPwd, var salt) = _hashing.Hash(model.Password);
         var user = new User
         {
             UserId = model.UserId,
-            Password = model.Password
+            Password = hashedPwd,
+            Salt = salt
         };
         if (_dataService.UpdateUser(user))
         {
