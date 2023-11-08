@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Net;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -7,6 +9,9 @@ namespace TestSuite;
 public class WebServiceTests
 {
     private const string MoviesApi = "http://localhost:5001/api/movieinfos";
+    private const string UsersApi = "http://localhost:5001/api/users";
+
+    /*  Api movieinfos  */
 
     [Fact]
     public async Task ApiMovies_GetMoviesNoArgument_OkAndAllMovies()
@@ -30,6 +35,18 @@ public class WebServiceTests
         Assert.Equal(HttpStatusCode.NotFound, statusCode);
     }
 
+    /*  User tests  */
+
+    [Fact]
+    public async Task ApiUser_CreateUserValid_Ok()
+    {
+        var newUser = new
+        {
+            UserId = "TestUser",
+            Password = "password"
+        };
+        var statusCode = await PostData(UsersApi, newUser);
+    }
 
     // Helpers taget fra Henriks test
 
@@ -40,6 +57,18 @@ public class WebServiceTests
         var data = await response.Content.ReadAsStringAsync();
         return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
     }
+    async Task<(JsonObject?, HttpStatusCode)> PostData(string url, object content)
+    {
+        var client = new HttpClient();
+        var requestContent = new StringContent(
+            JsonSerializer.Serialize(content),
+            Encoding.UTF8,
+            "application/json");
+        var response = await client.PostAsync(url, requestContent);
+        var data = await response.Content.ReadAsStringAsync();
+        return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
+    }
+
 }
 
 static class HelperExt
