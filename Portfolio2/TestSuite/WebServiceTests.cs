@@ -38,7 +38,7 @@ public class WebServiceTests
     /*  User tests  */
 
     [Fact]
-    public async Task ApiUser_CreateUserValid_Ok()
+    public async Task ApiUser_CreateUserValid_Created()
     {
         var newUser = new
         {
@@ -48,8 +48,21 @@ public class WebServiceTests
         var (_, statusCode) = await PostData(UsersApi, newUser);
 
         Assert.Equal(HttpStatusCode.Created, statusCode);
+        await DeleteData($"{UsersApi}?userid={newUser.UserId}");
+    }
 
-        await DeleteData($"{UsersApi}?userid={newUser.UserId}"); //sletter ikke em bruger lige nu
+    [Fact]
+    public async Task ApiUser_DeleteUser_Ok()
+    {
+        var newUser = new
+        {
+            UserId = "UserTest",
+            Password = "password"
+        };
+        await PostData(UsersApi, newUser);
+        var statusCode = await DeleteData($"{UsersApi}?userid={newUser.UserId}");
+        
+        Assert.Equal(HttpStatusCode.OK, statusCode);
     }
 
     // Helpers taget fra Henriks test
