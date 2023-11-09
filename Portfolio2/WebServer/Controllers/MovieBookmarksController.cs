@@ -1,5 +1,6 @@
 using AutoMapper;
 using DataLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace WebServer.Controllers;
 
 [Route("api/moviebookmarks")]
 [ApiController]
+[Authorize]
 
 public class MovieBookmarksController : BaseController
 {
@@ -24,27 +26,42 @@ public class MovieBookmarksController : BaseController
 
     public IActionResult CreateMovieBookmark(MovieBookmark movieBookmark)
     {
-        var bookmark = new MovieBookmark
+        try
         {
-            MovieInfoId = movieBookmark.MovieInfoId,
-            UserId = movieBookmark.UserId
-        };
-        if (_dataService.CreateMovieBookmark(bookmark))
-        {
-            return Created("success", bookmark);
-        }
+            var bookmark = new MovieBookmark
+            {
+                MovieInfoId = movieBookmark.MovieInfoId,
+                UserId = movieBookmark.UserId
+            };
+            if (_dataService.CreateMovieBookmark(bookmark))
+            {
+                return Created("success", bookmark);
+            }
 
-        return BadRequest();
+            return BadRequest();
+        }
+        catch
+        {
+            return Unauthorized();
+        }
     }
 
     [HttpDelete]
 
     public IActionResult DeleteMovieBookmark(MovieBookmark movieBookmark)
     {
-        if (_dataService.DeleteMovieBookmark(movieBookmark))
+        try
         {
-            return Ok("deleted");
+            if (_dataService.DeleteMovieBookmark(movieBookmark))
+            {
+                return Ok("deleted");
+            }
+
+            return BadRequest();
         }
-        return BadRequest();
-    }   
+        catch
+        {
+            return Unauthorized();
+        }
+    }
 }
