@@ -28,6 +28,10 @@ public class MovieBookmarksController : BaseController
     {
         try
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
             var bookmark = new MovieBookmark
             {
                 MovieInfoId = movieBookmark.MovieInfoId,
@@ -38,11 +42,11 @@ public class MovieBookmarksController : BaseController
                 return Created("success", bookmark);
             }
 
-            return BadRequest();
+            return BadRequest(movieBookmark);
         }
         catch
         {
-            return Unauthorized();
+            return BadRequest(movieBookmark);
         }
     }
 
@@ -52,6 +56,10 @@ public class MovieBookmarksController : BaseController
     {
         try
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
             if (_dataService.DeleteMovieBookmark(movieBookmark))
             {
                 return Ok("deleted");
@@ -61,7 +69,7 @@ public class MovieBookmarksController : BaseController
         }
         catch
         {
-            return Unauthorized();
+            return BadRequest();
         }
     }
 }

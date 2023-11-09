@@ -64,6 +64,7 @@ public class WebServiceTests
         
         Assert.Equal(HttpStatusCode.OK, statusCode);
     }
+    
 
     // Helpers taget fra Henriks test
 

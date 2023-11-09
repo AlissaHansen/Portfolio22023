@@ -28,6 +28,10 @@ public class PersonBookmarksController : BaseController
     {
         try
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized(personBookmark);
+            }
             var bookmark = new PersonBookmark
             {
                 PersonId = personBookmark.PersonId,
@@ -38,11 +42,11 @@ public class PersonBookmarksController : BaseController
                 return Created("success", bookmark);
             }
 
-            return BadRequest();
+            return BadRequest(personBookmark);
         }
         catch
         {
-            return Unauthorized();
+            return BadRequest(personBookmark);
         }
     }
 
@@ -52,16 +56,20 @@ public class PersonBookmarksController : BaseController
     {
         try
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized(personBookmark);
+            }
             if (_dataService.DeletePersonBookmark(personBookmark))
             {
                 return Ok("deleted");
             }
 
-            return BadRequest();
+            return BadRequest(personBookmark);
         }
         catch
         {
-            return Unauthorized();
+            return BadRequest(personBookmark);
         }
     }
 }
