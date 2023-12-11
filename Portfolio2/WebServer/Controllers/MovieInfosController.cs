@@ -22,12 +22,16 @@ public class MovieInfosController : BaseController
 
     [HttpGet(Name = nameof(GetMovieInfos))]
 
-    public IActionResult GetMovieInfos(int page = 0, int pageSize = 10, string ranked = "false")
+    public IActionResult GetMovieInfos(int page = 0, int pageSize = 10, string ranked = "false", string newest = "false")
     {
 
-        (var movieInfos, var total) = ranked.Equals("true")
-        ? _dataService.GetRankedMovieInfos(page, pageSize)
-        : _dataService.GetMovieInfos(page, pageSize);
+        var (movieInfos, total) = ranked.Equals("true")
+            ? newest.Equals("true")
+                ? _dataService.GetMovieInfos(page, pageSize)
+                : _dataService.GetRankedMovieInfos(page, pageSize)
+            : newest.Equals("true")
+                ? _dataService.GetMovieInfosByRelease(page, pageSize)
+                : _dataService.GetMovieInfos(page, pageSize);
 
         var items = movieInfos.Select(CreateMovieInfoListModel);
         

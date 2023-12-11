@@ -27,6 +27,18 @@ public class DataService : IDataService
         return (movieInfos, db.MovieInfos.Count());
     }
 
+    public (IList<MovieInfo> movieInfos, int count) GetMovieInfosByRelease(int page, int pageSize)
+    {
+        var db = new MoviedbContext();
+        var movieInfos = db.MovieInfos
+            .Include(x=> x.Rating)
+            .OrderByDescending(x => x.StartYear)
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (movieInfos, db.MovieInfos.Count());
+    }
+
     public MovieInfo? GetMovieInfo(string searchId)
     {
         var db = new MoviedbContext();

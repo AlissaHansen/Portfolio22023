@@ -5,6 +5,7 @@ public interface IDataService
     // Movie Methods
     public (IList<MovieInfo> movieInfos, int count) GetMovieInfos(int page, int pageSize);
     public (IList<MovieInfo> movieInfos, int count) GetRankedMovieInfos(int page, int pageSize);
+    public (IList<MovieInfo> movieInfos, int count) GetMovieInfosByRelease(int page, int pageSize);
     public MovieInfo? GetMovieInfo(string Id);
 
     //Person Methods
