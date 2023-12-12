@@ -62,7 +62,12 @@ public class UsersController : BaseController
             return BadRequest();
         }
 
-        if (string.IsNullOrEmpty(model.Password))
+        if (model.UserId.Length < 4)
+        {
+            return BadRequest();
+        }
+
+        if (model.Password.Length < 6)
         {
             return BadRequest();
         }
