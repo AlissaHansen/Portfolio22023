@@ -55,7 +55,8 @@ public class MovieInfosController : BaseController
     private MovieInfoListModel CreateMovieInfoListModel(MovieInfo movieInfo)
     {
         var model = _mapper.Map<MovieInfoListModel>(movieInfo);
-        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id }); 
+        model.Url = GetUrl(nameof(GetMovieInfo), new { movieInfo.Id });
+        model.Id = movieInfo.Id;
         model.AverageRating = movieInfo.Rating.AverageRating;
         model.NumVotes = movieInfo.Rating.NumVotes;
         return model;
