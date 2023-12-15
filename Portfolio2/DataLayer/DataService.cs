@@ -17,14 +17,19 @@ public class DataService : IDataService
     public (IList<MovieInfo> movieInfos, int count) GetRankedMovieInfos(int page, int pageSize)
     {
         var db = new MoviedbContext();
-        var movieInfos = db.MovieInfos
+        var query = db.MovieInfos
             .Include(x => x.Rating)
             .Where(x => x.Rating.NumVotes > 10000)
-            .OrderByDescending(x => x.Rating != null ? x.Rating.AverageRating : 0) // Handle null ratings
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToList();
-        return (movieInfos, db.MovieInfos.Count());
+            .OrderByDescending(x => x.Rating != null ? x.Rating.AverageRating : 0); // Handle null ratings
+            
+            var totalCount = query.Count(); // Henter antallet af film efter filtrering
+                
+             var movieInfos= query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+        
+        return (movieInfos, totalCount);
     }
 
     public (IList<MovieInfo> movieInfos, int count) GetMovieInfosByRelease(int page, int pageSize)
